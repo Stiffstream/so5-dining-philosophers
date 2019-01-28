@@ -71,7 +71,7 @@ void philosopher_process(
 		so_5::send< take_t >( left_fork, self_ch->as_mbox(), philosopher_index );
 
 		// Request sent, wait for a reply.
-		so_5::receive( self_ch, so_5::infinite_wait,
+		so_5::receive( so_5::from( self_ch ).handle_n( 1u ),
 			[&]( so_5::mhood_t<taken_t> ) {
 				// Left fork is taken.
 				// Try to get the right fork.
@@ -80,7 +80,7 @@ void philosopher_process(
 						right_fork, self_ch->as_mbox(), philosopher_index );
 
 				// Request sent, wait for a reply.
-				so_5::receive( self_ch, so_5::infinite_wait,
+				so_5::receive( so_5::from( self_ch ).handle_n( 1u ),
 					[&]( so_5::mhood_t<taken_t> ) {
 						// Both fork are taken. We can eat.
 						tracer.eating_started( philosopher_index );
