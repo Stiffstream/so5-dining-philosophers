@@ -1,8 +1,8 @@
+#include <dining_philosophers/csp_based/trace_maker/all.hpp>
+
 #include <dining_philosophers/common/fork_messages.hpp>
 #include <dining_philosophers/common/random_generator.hpp>
 #include <dining_philosophers/common/defaults.hpp>
-
-#include <dining_philosophers/csp_based/trace_maker/all.hpp>
 
 #include <so_5_extra/mboxes/proxy.hpp>
 
@@ -387,38 +387,35 @@ void philosopher_process(
 
 		// Request sent, wait for a reply.
 		so_5::receive( self_ch, so_5::infinite_wait,
-				[]( so_5::mhood_t<busy_t> ) { /* nothing to do */ },
-				[&]( so_5::mhood_t<taken_t> ) {
-					// Left fork is taken.
-					// Try to get the right fork.
-					tracer.take_right_attempt( philosopher_index );
-					so_5::send< take_t >(
-							right_fork, self_ch->as_mbox(), philosopher_index );
+			[&]( so_5::mhood_t<taken_t> ) {
+				// Left fork is taken.
+				// Try to get the right fork.
+				tracer.take_right_attempt( philosopher_index );
+				so_5::send< take_t >(
+						right_fork, self_ch->as_mbox(), philosopher_index );
 
-					// Request sent, wait for a reply.
-					so_5::receive( self_ch, so_5::infinite_wait,
-							[]( so_5::mhood_t<busy_t> ) { /* nothing to do */ },
-							[&]( so_5::mhood_t<taken_t> ) {
-								// Both fork are taken. We can eat.
-								tracer.eating_started( philosopher_index );
+				// Request sent, wait for a reply.
+				so_5::receive( self_ch, so_5::infinite_wait,
+					[&]( so_5::mhood_t<taken_t> ) {
+						// Both fork are taken. We can eat.
+						tracer.eating_started( philosopher_index );
 
-								// Simulate eating by suspending the thread.
-								std::this_thread::sleep_for( pause_generator.eat_pause() );
+						// Simulate eating by suspending the thread.
+						std::this_thread::sleep_for( pause_generator.eat_pause() );
 
-								// One step closer to the end.
-								++meals_eaten;
+						// One step closer to the end.
+						++meals_eaten;
 
-								// Right fork should be returned after eating.
-								so_5::send< put_t >( right_fork );
+						// Right fork should be returned after eating.
+						so_5::send< put_t >( right_fork );
 
-								// Next thinking will be normal, not 'hungry_thinking'.
-								thinking_type = thinking_type_t::normal;
-							} );
+						// Next thinking will be normal, not 'hungry_thinking'.
+						thinking_type = thinking_type_t::normal;
+					} );
 
-					// Left fork should be returned.
-					so_5::send< put_t >( left_fork );
-				} );
-
+				// Left fork should be returned.
+				so_5::send< put_t >( left_fork );
+			} );
 	}
 
 	// Notify about the completion of the work.
