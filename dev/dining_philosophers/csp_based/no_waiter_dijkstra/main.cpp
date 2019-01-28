@@ -1,8 +1,8 @@
+#include <dining_philosophers/csp_based/trace_maker/all.hpp>
+
 #include <dining_philosophers/common/fork_messages.hpp>
 #include <dining_philosophers/common/random_generator.hpp>
 #include <dining_philosophers/common/defaults.hpp>
-
-#include <dining_philosophers/csp_based/trace_maker/all.hpp>
 
 #include <fmt/format.h>
 
