@@ -1,0 +1,6 @@
+add_subdirectory(trace_maker)
+add_subdirectory(no_waiter_dijkstra)
+add_subdirectory(no_waiter_simple)
+add_subdirectory(no_waiter_simple_tp)
+add_subdirectory(waiter_with_queue)
+add_subdirectory(waiter_with_timestamps)
