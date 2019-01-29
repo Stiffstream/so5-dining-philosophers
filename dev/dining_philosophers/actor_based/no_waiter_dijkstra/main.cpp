@@ -103,10 +103,10 @@ public :
 					so_5::send< take_t >( m_right_fork, so_direct_mbox(), m_index );
 				} );
 
-		// When we wait for the left fork we react only to 'taken' reply.
+		// When we wait for the right fork we react only to 'taken' reply.
 		st_wait_right
 			.event( [=]( mhood_t<taken_t> ) {
-					// We have both forks. Cat eat our meal.
+					// We have both forks. Can eat our meal.
 					this >>= st_eating;
 				} );
 
