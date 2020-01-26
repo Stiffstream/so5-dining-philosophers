@@ -13,9 +13,9 @@ There are two ways to get the examples and all necessary dependencies.
 
 ### Download The Full Archive
 
-There is a [Downloads section](https://bitbucket.org/sobjectizerteam/so5_dining_philosophers/downloads/). It contains archives with all source codes (it means that an archive contains sources of the examples and sources
+There is a [Releases section](https://github.com/Stiffstream/so5-dining-philosophers/releases). It contains archives with all source codes (it means that an archive contains sources of the examples and sources
 of all necessary subprojects). The simpliest way is to download a corresponding archive, unpack it, go into
-`so5_dining_philosophers/dev`, then compile and run.
+`so5-dining-philosophers/dev`, then compile and run.
 
 ### Use MxxRu::externals
 
@@ -23,8 +23,8 @@ It this case you need to have Ruby + MxxRu + various utilities which every Linux
 
 1. Install Ruby, RubyGems and Rake (usually RubyGems is installed with Ruby but sometimes you have to install it separatelly).
 2. Install MxxRu: `gem install Mxx_ru`
-3. Do hg clone: `hg clone https://bitbucket.org/sobjectizerteam/so5_dining_philosophers`
-4. Go into appropriate folder: `cd so5_dining_philosophers`
+3. Do git clone: `git clone https://github.com/Stiffstream/so5-dining-philosophers`
+4. Go into appropriate folder: `cd so5-dining-philosophers`
 5. Run command `mxxruexternals`
 6. Wait while add dependencies will be downloaded.
 
@@ -37,7 +37,7 @@ Then go to `dev` subfolder, compile and run.
 A well known chain of actions:
 
 ~~~~~
-cd so5_dining_philosophers/dev
+cd so5-dining-philosophers/dev
 mkdir cmake_build
 cd cmake_build
 cmake -DCMAKE_INSTALL_PREFIX=target -DCMAKE_BUILD_TYPE=release ..
@@ -57,7 +57,7 @@ cmake --build . --config Release --target run_tests
 The following chain of actions is necessary for building with MxxRu:
 
 ~~~~~
-cd so5_dining_philosophers/dev
+cd so5-dining-philosophers/dev
 ruby build.rb
 ~~~~~
 
