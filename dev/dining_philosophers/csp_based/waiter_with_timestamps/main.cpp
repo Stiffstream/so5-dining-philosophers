@@ -247,7 +247,7 @@ private :
 
 		if( can_eat )
 		{
-			// May be the left neighbor has greater priority?
+			// May be the right neighbor has greater priority?
 			const auto right_neighbor =
 					(cmd->m_philosopher_index + 1) % m_fork_states.size();
 

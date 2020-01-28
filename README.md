@@ -4,7 +4,7 @@ This repository contains several implementations of solutions for ["Dining Philo
 
 ## Prerequisites
 
-A C++ complier with more or less good support of C++14. We have tried gcc-5.5, clang-3.8 and Visual C++ 15.9.
+Since Jan 2020 a compiler with support of C++17 is required. A C++14 version can be found under the [tag 20190129](https://github.com/Stiffstream/so5-dining-philosophers/tree/20190129).
 
 ## How To Obtain?
 
