@@ -251,12 +251,12 @@ void run_simulation( so_5::environment_t & env, const names_holder_t & names )
 {
 	env.introduce_coop( [&]( so_5::coop_t & coop ) {
 		coop.make_agent_with_binder< trace_maker_t >(
-				so_5::disp::one_thread::create_private_disp( env )->binder(),
+				so_5::disp::one_thread::make_dispatcher( env ).binder(),
 				names,
 				random_pause_generator_t::trace_step() );
 
 		coop.make_agent_with_binder< completion_watcher_t >(
-				so_5::disp::one_thread::create_private_disp( env )->binder(),
+				so_5::disp::one_thread::make_dispatcher( env ).binder(),
 				names );
 
 		const auto count = names.size();

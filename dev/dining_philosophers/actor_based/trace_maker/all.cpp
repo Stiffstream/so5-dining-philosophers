@@ -45,7 +45,7 @@ state_watcher_t::state_watcher_t(
 	,	m_index{ index }
 {}
 
-void state_watcher_t::changed( so_5::agent_t &, const so_5::state_t & state ) 
+void state_watcher_t::changed( so_5::agent_t &, const so_5::state_t & state ) noexcept
 {
 	const auto detect_label = []( const std::string & name ) {
 		if( "thinking.normal" == name ) return trace::st_normal_thinking;

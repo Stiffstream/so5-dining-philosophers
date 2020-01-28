@@ -30,12 +30,12 @@ void run_simulation( so_5::environment_t & env, const names_holder_t & names )
 {
 	env.introduce_coop( [&]( so_5::coop_t & coop ) {
 		coop.make_agent_with_binder< trace_maker_t >(
-				so_5::disp::one_thread::create_private_disp( env )->binder(),
+				so_5::disp::one_thread::make_dispatcher( env ).binder(),
 				names,
 				random_pause_generator_t::trace_step() );
 
 		coop.make_agent_with_binder< completion_watcher_t >(
-				so_5::disp::one_thread::create_private_disp( env )->binder(),
+				so_5::disp::one_thread::make_dispatcher( env ).binder(),
 				names );
 
 		const auto count = names.size();
@@ -46,23 +46,23 @@ void run_simulation( so_5::environment_t & env, const names_holder_t & names )
 
 		std::vector< so_5::agent_t * > forks( count, nullptr );
 		// Create a thread_pool dispatcher for fork agents.
-		auto fork_disp = so_5::disp::thread_pool::create_private_disp(
+		auto fork_disp = so_5::disp::thread_pool::make_dispatcher(
 					env,
 					3u // Size of the pool
 				);
 		for( std::size_t i{}; i != count; ++i )
 			// Every fork actor will be bound to fork_disp dispatcher.
 			forks[ i ] = coop.make_agent_with_binder< fork_t >(
-					fork_disp->binder( bind_params ) );
+					fork_disp.binder( bind_params ) );
 
 		// Create a thread_pool dispatcher for philosopher agents.
-		auto philosopher_disp = so_5::disp::thread_pool::create_private_disp(
+		auto philosopher_disp = so_5::disp::thread_pool::make_dispatcher(
 					env,
 					6u // Size of the pool
 				);
 		for( std::size_t i{}; i != count; ++i )
 			coop.make_agent_with_binder< philosopher_t >(
-					philosopher_disp->binder( bind_params ),
+					philosopher_disp.binder( bind_params ),
 					i,
 					forks[ i ]->so_direct_mbox(),
 					forks[ (i + 1) % count ]->so_direct_mbox(),

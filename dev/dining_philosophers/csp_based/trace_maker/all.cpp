@@ -67,7 +67,7 @@ void trace_maker_t::thread_func( trace_maker_t * self )
 {
 	auto trace_data = trace::make_trace_data( self->m_names.size() );
 
-	so_5::receive( so_5::from( self->m_ch ),
+	so_5::receive( so_5::from( self->m_ch ).handle_all(),
 			[&trace_data]( so_5::mhood_t< trace::state_changed_t > cmd ) {
 				trace_data[ cmd->m_index ].emplace_back( cmd->m_when, cmd->m_state );
 			} );

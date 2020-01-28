@@ -74,7 +74,7 @@ public :
 	void do_deliver_message(
 		const std::type_index & msg_type,
 		const so_5::message_ref_t & message,
-		unsigned int overlimit_reaction_deep ) const override
+		unsigned int overlimit_reaction_deep ) override
 	{
 		if( original_take_type == msg_type )
 		{
@@ -343,7 +343,7 @@ void waiter_process(
 	details::waiter_logic_t & logic )
 {
 	// Receive and handle all messages until the channel will be closed.
-	so_5::receive( so_5::from( waiter_ch ),
+	so_5::receive( so_5::from( waiter_ch ).handle_all(),
 			[&]( so_5::mhood_t<details::extended_take_t> cmd ) {
 				logic.on_take_fork( std::move(cmd) );
 			},

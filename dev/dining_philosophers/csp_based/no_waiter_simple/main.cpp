@@ -12,7 +12,7 @@ void fork_process(
 	bool taken = false;
 
 	// Receive and handle all messages until the channel will be closed.
-	so_5::receive( so_5::from( fork_ch ),
+	so_5::receive( so_5::from( fork_ch ).handle_all(),
 			[&]( so_5::mhood_t<take_t> cmd ) {
 				if( taken )
 					so_5::send< busy_t >( cmd->m_who );

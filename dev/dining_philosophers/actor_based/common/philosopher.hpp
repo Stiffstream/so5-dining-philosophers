@@ -32,25 +32,25 @@ public :
 	void so_define_agent() override
 	{
 		st_thinking
-			.event< stop_thinking_t >( [=] {
+			.event( [=](mhood_t<stop_thinking_t>) {
 				this >>= st_wait_left;
 				so_5::send< take_t >( m_left_fork, so_direct_mbox(), m_index );
 			} );
 
 		st_wait_left
-			.event< taken_t >( [=] {
+			.event( [=](mhood_t<taken_t>) {
 				this >>= st_wait_right;
 				so_5::send< take_t >( m_right_fork, so_direct_mbox(), m_index );
 			} )
-			.event< busy_t >( [=] {
+			.event( [=](mhood_t<busy_t>) {
 				think( st_hungry_thinking );
 			} );
 
 		st_wait_right
-			.event< taken_t >( [=] {
+			.event( [=](mhood_t<taken_t>) {
 				this >>= st_eating;
 			} )
-			.event< busy_t >( [=] {
+			.event( [=](mhood_t<busy_t>) {
 				so_5::send< put_t >( m_left_fork );
 				think( st_hungry_thinking );
 			} );
@@ -59,7 +59,7 @@ public :
 			.on_enter( [=] {
 					so_5::send_delayed< stop_eating_t >( *this, eat_pause() );
 				} )
-			.event< stop_eating_t >( [=] {
+			.event( [=](mhood_t<stop_eating_t>) {
 				so_5::send< put_t >( m_right_fork );
 				so_5::send< put_t >( m_left_fork );
 

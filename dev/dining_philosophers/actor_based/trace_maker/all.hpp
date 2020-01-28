@@ -50,6 +50,6 @@ public :
 		};
 	}
 
-	void changed( so_5::agent_t &, const so_5::state_t & state ) override;
+	void changed( so_5::agent_t &, const so_5::state_t & state ) noexcept override;
 };
 
