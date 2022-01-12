@@ -88,7 +88,7 @@ public :
 	{
 		// In 'thinking' state we wait only for delayed stop_thinking signal.
 		st_thinking
-			.event( [=]( mhood_t<stop_thinking_t> ) {
+			.event( [this]( mhood_t<stop_thinking_t> ) {
 					// Try to get the left fork.
 					this >>= st_wait_left;
 					so_5::send< take_t >( m_left_fork, so_direct_mbox(), m_index );
@@ -96,7 +96,7 @@ public :
 
 		// When we wait for the left fork we react only to 'taken' reply.
 		st_wait_left
-			.event( [=]( mhood_t<taken_t> ) {
+			.event( [this]( mhood_t<taken_t> ) {
 					// Now we have the left fork.
 					// Try to get the right fork.
 					this >>= st_wait_right;
@@ -105,7 +105,7 @@ public :
 
 		// When we wait for the right fork we react only to 'taken' reply.
 		st_wait_right
-			.event( [=]( mhood_t<taken_t> ) {
+			.event( [this]( mhood_t<taken_t> ) {
 					// We have both forks. Can eat our meal.
 					this >>= st_eating;
 				} );
@@ -113,10 +113,10 @@ public :
 		// When we in 'eating' state we react only to 'stop_eating' signal.
 		st_eating
 			// 'stop_eating' signal should be initiated when we enter 'eating' state.
-			.on_enter( [=] {
+			.on_enter( [this] {
 					so_5::send_delayed< stop_eating_t >( *this, eat_pause() );
 				} )
-			.event( [=]( mhood_t<stop_eating_t> ) {
+			.event( [this]( mhood_t<stop_eating_t> ) {
 				// Both forks should be returned back.
 				so_5::send< put_t >( m_right_fork );
 				so_5::send< put_t >( m_left_fork );
@@ -130,7 +130,7 @@ public :
 			} );
 
 		st_done
-			.on_enter( [=] {
+			.on_enter( [this] {
 				// Notify about completion.
 				completion_watcher_t::done( so_environment(), m_index );
 			} );

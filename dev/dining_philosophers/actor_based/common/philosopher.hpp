@@ -32,34 +32,34 @@ public :
 	void so_define_agent() override
 	{
 		st_thinking
-			.event( [=](mhood_t<stop_thinking_t>) {
+			.event( [this](mhood_t<stop_thinking_t>) {
 				this >>= st_wait_left;
 				so_5::send< take_t >( m_left_fork, so_direct_mbox(), m_index );
 			} );
 
 		st_wait_left
-			.event( [=](mhood_t<taken_t>) {
+			.event( [this](mhood_t<taken_t>) {
 				this >>= st_wait_right;
 				so_5::send< take_t >( m_right_fork, so_direct_mbox(), m_index );
 			} )
-			.event( [=](mhood_t<busy_t>) {
+			.event( [this](mhood_t<busy_t>) {
 				think( st_hungry_thinking );
 			} );
 
 		st_wait_right
-			.event( [=](mhood_t<taken_t>) {
+			.event( [this](mhood_t<taken_t>) {
 				this >>= st_eating;
 			} )
-			.event( [=](mhood_t<busy_t>) {
+			.event( [this](mhood_t<busy_t>) {
 				so_5::send< put_t >( m_left_fork );
 				think( st_hungry_thinking );
 			} );
 
 		st_eating
-			.on_enter( [=] {
+			.on_enter( [this] {
 					so_5::send_delayed< stop_eating_t >( *this, eat_pause() );
 				} )
-			.event( [=](mhood_t<stop_eating_t>) {
+			.event( [this](mhood_t<stop_eating_t>) {
 				so_5::send< put_t >( m_right_fork );
 				so_5::send< put_t >( m_left_fork );
 
@@ -71,7 +71,7 @@ public :
 			} );
 
 		st_done
-			.on_enter( [=] {
+			.on_enter( [this] {
 				completion_watcher_t::done( so_environment(), m_index );
 			} );
 	}
