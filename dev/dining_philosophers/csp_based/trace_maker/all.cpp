@@ -58,7 +58,7 @@ void trace_maker_t::done()
 {
 	if( m_trace_thread.joinable() )
 	{
-		so_5::close_retain_content( m_ch );
+		so_5::close_retain_content( so_5::terminate_if_throws, m_ch );
 		m_trace_thread.join();
 	}
 }

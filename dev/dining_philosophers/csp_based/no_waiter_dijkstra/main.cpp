@@ -171,7 +171,7 @@ void run_simulation(
 
 	// Close channels for all forks.
 	for( auto & ch : fork_chains )
-		so_5::close_drop_content( ch );
+		so_5::close_drop_content( so_5::terminate_if_throws, ch );
 
 	// Wait for completion of fork threads.
 	join_all( fork_threads );

@@ -408,7 +408,7 @@ void run_simulation(
 	join_all( philosopher_threads );
 
 	// Close waiter channel.
-	so_5::close_drop_content( waiter_ch );
+	so_5::close_drop_content( so_5::terminate_if_throws, waiter_ch );
 
 	// Wait for completion of waiter thread.
 	waiter_thread.join();
