@@ -1,7 +1,11 @@
 cmake_minimum_required(VERSION 3.10)
 
-# For MSVC_RUNTIME_LIBRARY.
-cmake_policy(SET CMP0091 NEW)
+# Use static libs always, even on Windows.
+if(WIN32)
+    set(VCPKG_TARGET_TRIPLET "x64-windows-static")
+elseif (LINUX)
+    set(VCPKG_TARGET_TRIPLET "x64-linux")
+endif()
 
 # For case if there is no CMAKE_TOOLCHAIN_FILE, but VCPKG_HOME exists.
 if (NOT DEFINED CMAKE_TOOLCHAIN_FILE)
