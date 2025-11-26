@@ -72,6 +72,7 @@ public :
 	// delivery. We override it to intercept and translate some types of
 	// messages.
 	void do_deliver_message(
+		so_5::message_delivery_mode_t delivery_mode,
 		const std::type_index & msg_type,
 		const so_5::message_ref_t & message,
 		unsigned int overlimit_reaction_deep ) override
@@ -95,6 +96,7 @@ public :
 		}
 		else
 			base_type_t::do_deliver_message(
+					delivery_mode,
 					msg_type,
 					message,
 					overlimit_reaction_deep );
