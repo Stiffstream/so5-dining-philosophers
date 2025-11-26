@@ -1,20 +1,11 @@
 syntax: glob
 
-.externals
 tmp
-dev/tmp
-dev/target
-dev/target_*
-dev/so_5
-dev/so_5_extra
-dev/timertt
-dev/fmt
-dev/fmt_mxxru
-o/*
-cmake_build/*
+cmake_build*
+cmake_release*
+cmake_debug*
 ./wiki
 *.sublime-project
 *.sublime-workspace
 *.swp
 *.log
-dev/local-build.rb

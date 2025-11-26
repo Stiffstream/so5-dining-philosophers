@@ -1,0 +1,4 @@
+{
+  "dependencies": [ "fmt", "sobjectizer", "so5extra" ],
+  "builtin-baseline": "da93ad9cabf14d54dd9b460a12a458d359a970ff"
+}
