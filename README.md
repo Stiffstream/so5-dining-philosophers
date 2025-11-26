@@ -23,7 +23,7 @@ You need CMake to compile and build the examples.
 # Step 1: obtaining vcpkg.
 git clone --depth=1 https://github.com/microsoft/vcpkg
 cd vcpkg
-./bootstrap-vcpkg
+./bootstrap-vcpkg.sh
 cd ..
 
 # Step 2: obtaining the project.
@@ -74,3 +74,4 @@ cmake --build . --config Release
 cd bin
 ```
 where `VCPKG_LOCATION` is the path to vcpkg directory.
+
